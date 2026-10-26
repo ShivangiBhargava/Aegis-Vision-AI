@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  aegis-vision:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: aegis-vision-sentinel
+    ports:
+      - "8000:8000"
+    environment:
+      - AWS_DEFAULT_REGION=us-east-1
+      - AEGIS_S3_BUCKET=aegis-vision-telemetry-opencv26
+      - AEGIS_DYNAMO_TABLE=AegisVisionIncidents
+      - AEGIS_IOT_THING_NAME=AegisIndustrialFacilityAlpha
+      # If deploying live on AWS, inject real credentials:
+      # - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      # - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/status"]
+      interval: 15s
+      timeout: 5s
+      retries: 3

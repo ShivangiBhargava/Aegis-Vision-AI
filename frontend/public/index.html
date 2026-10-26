@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AegisVision - Autonomous Physical AI & Agentic Industrial Safety Sentinel (OpenCV 5 & AWS)</title>
+  <meta name="description" content="AegisVision is an autonomous physical AI and agentic vision sentinel powered by OpenCV 5 and AWS cloud infrastructure, enabling real-time visual inspection, regulatory reasoning, and physical actuation.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2300f3ff'><path d='M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z'/></svg>">
+</head>
+<body>
+
+  <!-- Navigation Header -->
+  <header>
+    <div class="brand">
+      <div class="brand-icon">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 2L4 6v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V6l-8-4zm1 14.5h-2v-2h2v2zm0-4h-2V7h2v5.5z"/>
+        </svg>
+      </div>
+      <div class="brand-text">
+        <h1>AEGIS VISION</h1>
+        <div class="brand-badges">
+          <span class="badge badge-opencv">OpenCV 5.0 Core</span>
+          <span class="badge badge-aws">AWS Bedrock & IoT</span>
+          <span class="badge badge-cool">COOL Accelerated</span>
+          <span class="badge badge-agent">Agentic Vision</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <nav class="nav-tabs" role="tablist">
+      <button class="nav-tab active" data-tab="surveillance" id="tab-btn-surveillance">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+        Vision Matrix
+      </button>
+      <button class="nav-tab" data-tab="agent" id="tab-btn-agent">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2M7.5 13A2.5 2.5 0 0 0 5 15.5 2.5 2.5 0 0 0 7.5 18a2.5 2.5 0 0 0 2.5-2.5A2.5 2.5 0 0 0 7.5 13m9 0a2.5 2.5 0 0 0-2.5 2.5 2.5 2.5 0 0 0 2.5 2.5 2.5 2.5 0 0 0 2.5-2.5 2.5 2.5 0 0 0-2.5-2.5"/></svg>
+        Agentic Reasoning & Actuation
+      </button>
+      <button class="nav-tab" data-tab="cool" id="tab-btn-cool">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/></svg>
+        COOL Cloud Benchmark
+      </button>
+      <button class="nav-tab" data-tab="twin" id="tab-btn-twin">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+        Digital Twin Map
+      </button>
+      <button class="nav-tab" data-tab="forensics" id="tab-btn-forensics">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+        Forensics & Audit
+      </button>
+    </nav>
+
+    <!-- Header Status Telemetry -->
+    <div class="header-status">
+      <div class="status-pill" id="system-status-indicator">
+        <div class="pulse-dot"></div>
+        <span id="system-status-text">SENTINEL ONLINE</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Body -->
+  <main>
+    <!-- ======================================================== -->
+    <!-- TAB 1: SURVEILLANCE & VISION MATRIX -->
+    <!-- ======================================================== -->
+    <section class="tab-pane active" id="pane-surveillance">
+      <!-- Channel Switcher Bar -->
+      <div class="channel-bar">
+        <button class="channel-btn active" data-channel="wafer" id="btn-ch-wafer">
+          <div class="ch-top">
+            <span class="ch-id">CAM-01</span>
+            <span class="badge badge-opencv">Sub-Pixel Canny</span>
+          </div>
+          <div class="ch-title">Wafer Micro-Defect Inspection</div>
+          <div class="ch-desc">Photolithography die cracks & void ratios</div>
+        </button>
+
+        <button class="channel-btn" data-channel="robot" id="btn-ch-robot">
+          <div class="ch-top">
+            <span class="ch-id">CAM-02</span>
+            <span class="badge badge-opencv">Farneback Flow</span>
+          </div>
+          <div class="ch-title">Robotic Arm & Safety Envelope</div>
+          <div class="ch-desc">Optical flow velocity & worker intrusion</div>
+        </button>
+
+        <button class="channel-btn" data-channel="chemical" id="btn-ch-chemical">
+          <div class="ch-top">
+            <span class="ch-id">CAM-03</span>
+            <span class="badge badge-opencv">HSV / YCrCb</span>
+          </div>
+          <div class="ch-title">Hazardous Chemical Storage Bay</div>
+          <div class="ch-desc">Toxic fluid puddle expansion & vapor plume</div>
+        </button>
+
+        <button class="channel-btn" data-channel="ppe" id="btn-ch-ppe">
+          <div class="ch-top">
+            <span class="ch-id">CAM-04</span>
+            <span class="badge badge-opencv">MOG2 Contour</span>
+          </div>
+          <div class="ch-title">Cleanroom Airlock PPE Sentinel</div>
+          <div class="ch-desc">OSHA 1910.132 hardhat & vest adherence</div>
+        </button>
+      </div>
+
+      <!-- Video Stage & Telemetry Layout -->
+      <div class="surveillance-layout">
+        <!-- Center Stage -->
+        <div class="stage-card">
+          <div class="stage-header">
+            <div class="stage-title">
+              <span id="active-channel-name">CAM-01: Semiconductor Cleanroom Wafer Inspection</span>
+            </div>
+
+            <!-- Filter Mode Selector -->
+            <div class="filter-selector">
+              <button class="filter-btn active" data-overlay="annotated">Annotated</button>
+              <button class="filter-btn" data-overlay="edges">Sub-Pixel Edges</button>
+              <button class="filter-btn" data-overlay="vectors">Optical Flow</button>
+              <button class="filter-btn" data-overlay="mask">Segmentation Heatmap</button>
+              <button class="filter-btn" data-overlay="raw">Raw Feed</button>
+            </div>
+          </div>
+
+          <!-- Video Canvas Area -->
+          <div class="video-wrapper">
+            <img id="live-stream-img" src="/api/stream/wafer?overlay=annotated" alt="Live OpenCV 5 Processed Feed">
+            
+            <!-- Dynamic HUD Layer -->
+            <div class="hud-layer">
+              <div class="hud-item">
+                <span>FPS: <strong id="hud-fps">28.4</strong></span>
+              </div>
+              <div class="hud-item">
+                <span>LATENCY: <strong id="hud-latency">11.2 ms</strong></span>
+              </div>
+              <div class="hud-item" id="hud-status-badge">
+                <span>STATUS: <strong id="hud-status-text">MONITORING</strong></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Upload / Test Image Bar -->
+          <div class="upload-controls">
+            <div style="display: flex; gap: 10px; align-items: center;">
+              <label for="custom-file-input" class="btn-secondary" style="cursor: pointer;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z"/></svg>
+                Upload Test Image
+              </label>
+              <input type="file" id="custom-file-input" accept="image/*" style="display: none;">
+              <button class="btn-secondary" id="btn-use-webcam">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c1.1 0 2 .9 2 2v1.07C17.61 5.57 20 8.5 20 12v5h1v2H3v-2h1v-5c0-3.5 2.39-6.43 6-6.93V4c0-1.1.9-2 2-2zm0 6c-2.21 0-4 1.79-4 4v5h8v-5c0-2.21-1.79-4-4-4z"/></svg>
+                Webcam Stream
+              </button>
+            </div>
+            <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-dim);">
+              OpenCV 5 Pipeline Core: NEON-Vectorized
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Telemetry Sidebar -->
+        <div class="telemetry-sidebar">
+          <!-- Real-Time Metrics -->
+          <div class="side-card">
+            <h3>Vision Telemetry <span class="badge badge-opencv" id="tel-cv-ver">OpenCV 5</span></h3>
+            <div class="metric-grid">
+              <div class="metric-box">
+                <div class="metric-label">Detected Objects</div>
+                <div class="metric-val" id="metric-objects">0</div>
+              </div>
+              <div class="metric-box">
+                <div class="metric-label">Anomaly Rating</div>
+                <div class="metric-val" id="metric-anomaly">0.0%</div>
+              </div>
+              <div class="metric-box">
+                <div class="metric-label">Frame Latency</div>
+                <div class="metric-val" id="metric-latency">0 ms</div>
+              </div>
+              <div class="metric-box">
+                <div class="metric-label">Policy Status</div>
+                <div class="metric-val nominal" id="metric-compliance">PASS</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Structured Anomaly Breakdown -->
+          <div class="side-card">
+            <h3>Detected Features</h3>
+            <div id="feature-list" style="font-family: var(--font-mono); font-size: 0.78rem; display: flex; flex-direction: column; gap: 8px; max-height: 140px; overflow-y: auto;">
+              <div style="color: var(--text-dim);">Awaiting inspection cycle...</div>
+            </div>
+          </div>
+
+          <!-- Live Agent Cognition Snippet -->
+          <div class="side-card">
+            <h3>Agentic State <span class="badge badge-agent">Autonomous</span></h3>
+            <div class="agent-terminal" id="mini-agent-terminal">
+              <div class="log-entry see">[00:00:01] [SEE] Ingesting telemetry from OpenCV 5 pipeline.</div>
+              <div class="log-entry reason">[00:00:01] [REASON] Evaluating ISO 14644-1 wafer threshold limits.</div>
+              <div class="log-entry act">[00:00:01] [STATUS] Production parameters nominal. No actuation needed.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- TAB 2: AGENTIC REASONING & PHYSICAL ACTUATION -->
+    <!-- ======================================================== -->
+    <section class="tab-pane" id="pane-agent">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px;">
+        <!-- Left: Full Cognitive Trace Terminal -->
+        <div class="side-card" style="display: flex; flex-direction: column; height: 580px;">
+          <h3>
+            Autonomous Agentic Cognitive Stream
+            <span class="badge badge-agent">AWS Bedrock Claude / Rule Engine</span>
+          </h3>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px;">
+            The agent autonomously synthesizes OpenCV 5 telemetry, verifies plant SOPs (OSHA & ISO regulations), and determines real-time intervention plans.
+          </p>
+          <div class="agent-terminal" id="full-agent-terminal" style="flex: 1; height: auto;">
+            <!-- Live cognitive log injected via JS -->
+          </div>
+        </div>
+
+        <!-- Right: Physical Actuator Command Center -->
+        <div class="side-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <h3>Physical Actuation Command & Control</h3>
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 16px;">
+              Live status of industrial machinery synchronized with AWS IoT Device Shadow. Autonomous agent dispatches actions or operators can trigger manual overrides.
+            </p>
+
+            <div class="actuator-grid">
+              <!-- Actuator 1: Conveyor E-Stop -->
+              <div class="actuator-card danger-border">
+                <div>
+                  <div class="actuator-header">
+                    <span class="actuator-title">Main Conveyor Interlock</span>
+                    <span class="badge badge-aws" id="badge-conveyor-status">NORMAL (120 RPM)</span>
+                  </div>
+                  <p style="font-size: 0.78rem; color: var(--text-muted);">
+                    Brings wafer transport or robotic cell conveyor to zero velocity within 140ms upon safety boundary intrusion.
+                  </p>
+                </div>
+                <button class="btn-actuator btn-halt" id="btn-trigger-estop">
+                  EMERGENCY HALT (E-STOP)
+                </button>
+              </div>
+
+              <!-- Actuator 2: AGV Fleet Detour -->
+              <div class="actuator-card">
+                <div>
+                  <div class="actuator-header">
+                    <span class="actuator-title">AGV-101 Mobile Fleet</span>
+                    <span class="badge badge-cool" id="badge-agv-status">AUTONOMOUS</span>
+                  </div>
+                  <p style="font-size: 0.78rem; color: var(--text-muted);">
+                    Reroutes autonomous guided vehicles away from active chemical spill coordinates and exclusion zones.
+                  </p>
+                </div>
+                <button class="btn-actuator btn-primary" id="btn-trigger-agv-reroute">
+                  REROUTE AGV FLEET
+                </button>
+              </div>
+
+              <!-- Actuator 3: HVAC Containment -->
+              <div class="actuator-card">
+                <div>
+                  <div class="actuator-header">
+                    <span class="actuator-title">HVAC Scrubber Damper</span>
+                    <span class="badge badge-opencv" id="badge-hvac-status">ISOLATION READY</span>
+                  </div>
+                  <p style="font-size: 0.78rem; color: var(--text-muted);">
+                    Seals zone dampers and engages negative pressure gas scrubbers to prevent hazardous vapor plume dispersion.
+                  </p>
+                </div>
+                <button class="btn-actuator btn-primary" id="btn-trigger-hvac">
+                  ENGAGE NEGATIVE PRESSURE
+                </button>
+              </div>
+
+              <!-- Actuator 4: AWS SNS Plant Alarm -->
+              <div class="actuator-card">
+                <div>
+                  <div class="actuator-header">
+                    <span class="actuator-title">AWS SNS Emergency Broadcast</span>
+                    <span class="badge badge-aws">MULTI-CHANNEL</span>
+                  </div>
+                  <p style="font-size: 0.78rem; color: var(--text-muted);">
+                    Dispatches push notifications, SMS alerts, and records incident packet in AWS DynamoDB for safety officers.
+                  </p>
+                </div>
+                <button class="btn-actuator btn-secondary" id="btn-trigger-sns">
+                  DISPATCH ALERT BROADCAST
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Actuation Audit Log -->
+          <div style="margin-top: 16px; border-top: 1px solid var(--border-subtle); padding-top: 12px;">
+            <div style="font-size: 0.82rem; font-weight: 700; color: var(--text-muted); margin-bottom: 6px;">
+              RECENT ACTUATOR DISPATCHES
+            </div>
+            <div id="actuator-history-list" style="font-family: var(--font-mono); font-size: 0.74rem; color: var(--text-dim); display: flex; flex-direction: column; gap: 4px;">
+              <div>[00:00:00] Actuator subsystem synchronized with AWS IoT Shadow.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- TAB 3: COOL CLOUD OPTIMIZATION BENCHMARK -->
+    <!-- ======================================================== -->
+    <section class="tab-pane" id="pane-cool">
+      <div style="margin-bottom: 20px;">
+        <h2 style="font-size: 1.3rem; margin-bottom: 6px;">
+          Cloud-Optimized OpenCV Library (COOL) Benchmark Studio
+        </h2>
+        <p style="font-size: 0.88rem; color: var(--text-muted); max-width: 900px;">
+          Designed for the <strong>Best Use of COOL Award ($1,000)</strong>. Compares Standard unoptimized OpenCV against the Cloud-Optimized OpenCV Library (COOL) tuned for low-cost <strong>AWS Graviton (ARM64 Neoverse)</strong> architecture, SIMD vectorization, tiled cache-coherent streaming, and zero-copy memory buffers.
+        </p>
+      </div>
+
+      <div class="benchmark-container">
+        <!-- Benchmark Card 1: Metrics & Live Runner -->
+        <div class="bench-card highlight">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px;">
+            <h3 style="font-size: 1.1rem; color: var(--green-neon);">Active Hardware Benchmark</h3>
+            <button class="btn-primary" id="btn-run-benchmark" style="padding: 8px 16px; font-size: 0.85rem;">
+              Run Live Benchmark
+            </button>
+          </div>
+
+          <div style="margin-bottom: 20px;">
+            <div class="bench-bar-label">
+              <span>Standard OpenCV Latency</span>
+              <strong id="metric-std-lat" style="color: #ffb700;">12.4 ms</strong>
+            </div>
+            <div class="bench-bar-track">
+              <div class="bench-bar-fill standard" id="bar-std-lat" style="width: 85%;"></div>
+            </div>
+          </div>
+
+          <div style="margin-bottom: 24px;">
+            <div class="bench-bar-label">
+              <span>COOL-Optimized Latency (Cache-Tiled & SIMD)</span>
+              <strong id="metric-cool-lat" style="color: var(--green-neon);">2.9 ms (4.2x Faster)</strong>
+            </div>
+            <div class="bench-bar-track">
+              <div class="bench-bar-fill cool" id="bar-cool-lat" style="width: 20%;"></div>
+            </div>
+          </div>
+
+          <div class="metric-grid">
+            <div class="metric-box">
+              <div class="metric-label">Speedup Factor</div>
+              <div class="metric-val" id="cool-speedup-val" style="color: var(--green-neon);">4.14x</div>
+            </div>
+            <div class="metric-box">
+              <div class="metric-label">Latency Reduction</div>
+              <div class="metric-val" id="cool-lat-reduct-val" style="color: var(--green-neon);">76.2%</div>
+            </div>
+            <div class="metric-box">
+              <div class="metric-label">Estimated Cloud Cost Savings</div>
+              <div class="metric-val" id="cool-cost-val" style="color: var(--cyan-glow);">57%</div>
+            </div>
+            <div class="metric-box">
+              <div class="metric-label">AWS Architecture</div>
+              <div class="metric-val" id="cool-arch-val" style="font-size: 0.95rem;">ARM64 Graviton</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Benchmark Card 2: COOL Architectural Innovations -->
+        <div class="bench-card">
+          <h3 style="font-size: 1.1rem; margin-bottom: 14px;">COOL Cloud Optimization Principles</h3>
+          
+          <div style="display: flex; flex-direction: column; gap: 14px; font-size: 0.88rem; color: var(--text-muted);">
+            <div style="background: rgba(6, 9, 15, 0.5); padding: 12px; border-radius: var(--radius-sm); border-left: 3px solid var(--green-neon);">
+              <strong style="color: var(--text-main);">1. Tiled Cache-Coherent Memory Dispatch</strong><br>
+              Frames are partitioned into vertically aligned tiles matching AWS Graviton Neoverse L2 cache boundaries (1MB), eliminating memory bus thrashing and cache misses during 4K video ingestion.
+            </div>
+
+            <div style="background: rgba(6, 9, 15, 0.5); padding: 12px; border-radius: var(--radius-sm); border-left: 3px solid var(--cyan-glow);">
+              <strong style="color: var(--text-main);">2. Graviton ARM NEON Vectorized Kernel Paths</strong><br>
+              Utilizes 128-bit vector registers on AWS Graviton3/4 processors to compute morphological gradients, color conversions, and Sobel matrices with 4x vector parallelism.
+            </div>
+
+            <div style="background: rgba(6, 9, 15, 0.5); padding: 12px; border-radius: var(--radius-sm); border-left: 3px solid var(--amber-warn);">
+              <strong style="color: var(--text-main);">3. Zero-Copy Shared Buffer Pools</strong><br>
+              Eliminates internal memory re-allocations across multi-stage video pipelines by maintaining pre-aligned 64-byte aligned buffer pools across stream threads.
+            </div>
+
+            <div style="background: rgba(6, 9, 15, 0.5); padding: 12px; border-radius: var(--radius-sm); border-left: 3px solid var(--purple-agent);">
+              <strong style="color: var(--text-main);">4. Cloud Scale Multi-Tenant Density</strong><br>
+              Decreasing per-stream CPU time from 12ms to 2.9ms allows a single AWS c7g.2xlarge instance to process 32 concurrent 1080p cameras instead of 8, slashing operational cloud costs by over 50%.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- TAB 4: FACILITY DIGITAL TWIN 2D MAP -->
+    <!-- ======================================================== -->
+    <section class="tab-pane" id="pane-twin">
+      <div style="margin-bottom: 20px;">
+        <h2 style="font-size: 1.3rem; margin-bottom: 6px;">Facility Digital Twin Spatial Map</h2>
+        <p style="font-size: 0.88rem; color: var(--text-muted);">
+          Real-time 2D spatial digital twin displaying camera nodes, dynamic exclusion envelopes, AGV robot positions, and live hazardous zones synced with AWS IoT Core.
+        </p>
+      </div>
+
+      <div class="map-canvas-wrapper">
+        <canvas id="digital-twin-canvas" width="1200" height="600" style="width: 100%; height: 500px;"></canvas>
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- TAB 5: FORENSICS & COMPLIANCE AUDIT PACKET -->
+    <!-- ======================================================== -->
+    <section class="tab-pane" id="pane-forensics">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <div>
+          <h2 style="font-size: 1.3rem; margin-bottom: 6px;">Regulatory Compliance & Forensics Center</h2>
+          <p style="font-size: 0.88rem; color: var(--text-muted);">
+            Timestamped incident packets, OpenCV 5 annotated visual evidence uploaded to AWS S3, and DynamoDB audit logs.
+          </p>
+        </div>
+        <button class="btn-primary" id="btn-download-audit" style="display: flex; align-items: center; gap: 8px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+          Export Compliance Audit Report
+        </button>
+      </div>
+
+      <div class="side-card">
+        <table class="forensics-table">
+          <thead>
+            <tr>
+              <th>INCIDENT ID</th>
+              <th>TIMESTAMP (UTC)</th>
+              <th>ZONE / CHANNEL</th>
+              <th>PRIMARY VIOLATION</th>
+              <th>AGENT INTERVENTION</th>
+              <th>AWS S3 FORENSIC LINK</th>
+            </tr>
+          </thead>
+          <tbody id="forensics-table-body">
+            <!-- Dynamically populated rows -->
+            <tr>
+              <td style="font-family: var(--font-mono); color: var(--cyan-glow);">INC-1730000001</td>
+              <td>2026-10-26 18:30:12</td>
+              <td>ROBOT_CELL_CH2</td>
+              <td><span class="badge" style="background: rgba(255, 0, 85, 0.2); color: var(--red-hazard);">OSHA 1910.212 Intrusion</span></td>
+              <td>Emergency Conveyor Halt Executed</td>
+              <td><a href="#" style="color: var(--cyan-glow); text-decoration: none;">s3://aegis-vision-opencv26/incidents/01.jpg</a></td>
+            </tr>
+            <tr>
+              <td style="font-family: var(--font-mono); color: var(--cyan-glow);">INC-1730000002</td>
+              <td>2026-10-26 18:30:45</td>
+              <td>CHEM_BAY_CH3</td>
+              <td><span class="badge" style="background: rgba(255, 183, 0, 0.2); color: var(--amber-warn);">NFPA 704 Hazmat Spill</span></td>
+              <td>Negative Pressure HVAC & AGV Rerouted</td>
+              <td><a href="#" style="color: var(--cyan-glow); text-decoration: none;">s3://aegis-vision-opencv26/incidents/02.jpg</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <!-- Client-side Logic Script -->
+  <script src="app.js"></script>
+</body>
+</html>
