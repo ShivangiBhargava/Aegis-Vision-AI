@@ -132,6 +132,7 @@ aegis-vision-ai/
 ├── deploy_aws.sh                    # Automated AWS cloud provisioning script
 ├── requirements.txt                 # Pinned Python dependencies
 └── README.md                        # Documentation
+└── Testing Instructions.md          # Testing Instructions for Aegis Vision AI
 ```
 
 ---
